@@ -1,6 +1,6 @@
 module github.com/uber/makisu
 
-go 1.12
+go 1.17
 
 require (
 	github.com/AlekSi/gocov-xml v0.0.0-20190121064608-3a14fb1c4737
@@ -23,7 +23,7 @@ require (
 	github.com/go-redis/redis v6.14.2+incompatible
 	github.com/golang/mock v1.4.4
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
-	github.com/google/go-cmp v0.4.0
+	github.com/google/go-cmp v0.5.6
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
@@ -37,6 +37,7 @@ require (
 	github.com/onsi/gomega v1.4.3 // indirect
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/opencontainers/image-spec v1.0.1 // indirect
+	github.com/pierrec/lz4/v4 v4.1.2
 	github.com/pkg/errors v0.9.1
 	github.com/pressly/chi v3.3.3+incompatible
 	github.com/prometheus/client_golang v0.9.2 // indirect
@@ -54,4 +55,23 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
 	golang.org/x/tools v0.0.0-20190425150028-36563e24a262
 	gopkg.in/yaml.v2 v2.2.2
+)
+
+require (
+	cloud.google.com/go v0.34.0 // indirect
+	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/golang/protobuf v1.2.0 // indirect
+	github.com/jmespath/go-jmespath v0.3.0 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.1 // indirect
+	github.com/kr/pretty v0.3.0 // indirect
+	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 // indirect
+	github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a // indirect
+	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 // indirect
+	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
+	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 )

@@ -63,9 +63,11 @@ type buildCmd struct {
 	dockerVersion string
 	dockerScheme  string
 	doLoad        bool
+	storageDir    string
 
-	storageDir       string
-	compressionLevel string
+	compressionAlgo      string
+	compressionLevelGzip string
+	compressionLevelLZ4  string
 
 	preserveRoot bool
 }
@@ -123,7 +125,9 @@ func getBuildCmd() *buildCmd {
 	buildCmd.PersistentFlags().BoolVar(&buildCmd.doLoad, "load", false, "Load image into docker daemon after build. Requires access to docker socket at location defined by ${DOCKER_HOST}")
 
 	buildCmd.PersistentFlags().StringVar(&buildCmd.storageDir, "storage", "", "Directory that makisu uses for temp files and cached layers. Mount this path for better caching performance. If modifyfs is set, default to /makisu-storage; Otherwise default to /tmp/makisu-storage")
-	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevel, "compression", "default", "Image compression level, could be 'no', 'speed', 'size', 'default'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionAlgo, "compressionl-algo", "gzip", "Image compression algorithm, could be 'gzip', 'lz4'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelGzip, "compressionl-level-gzip", "default", "Image compression level for gzip, could be 'no', 'speed', 'size', 'default'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelLZ4, "compression-level-lz4", "fast", "Image compression level for lz4, could be 'fast', 'level1', ..., 'level9'")
 
 	buildCmd.PersistentFlags().BoolVar(&buildCmd.preserveRoot, "preserve-root", false, "Copy / in the storage dir and copy it back after build.")
 
@@ -145,8 +149,16 @@ func (cmd *buildCmd) processFlags() error {
 		log.Infof("Added %d new items to blacklist: %v", len(cmd.blacklists), cmd.blacklists)
 	}
 
-	if err := tario.SetCompressionLevel(cmd.compressionLevel); err != nil {
-		return fmt.Errorf("set compression level: %s", err)
+	if err := tario.SetCompressionAlgorithm(cmd.compressionAlgo); err != nil {
+		return fmt.Errorf("set compression algorithm: %s", err)
+	}
+
+	if err := tario.SetCompressionLevelGzip(cmd.compressionLevelGzip); err != nil {
+		return fmt.Errorf("set gzip compression level: %s", err)
+	}
+
+	if err := tario.SetCompressionLevelLZ4(cmd.compressionLevelLZ4); err != nil {
+		return fmt.Errorf("set lz4 compression level: %s", err)
 	}
 
 	if cmd.commit != "explicit" && cmd.commit != "implicit" {

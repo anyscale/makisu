@@ -161,7 +161,7 @@ func CreateTarFromDirectory(target, dir string) error {
 	defer file.Close()
 
 	var tw *tar.Writer
-	gw, err := tario.NewGzipWriter(file)
+	gw, err := tario.NewCompressionWriter(file)
 	if err != nil {
 		return fmt.Errorf("new gzip writer: %s", err)
 	}

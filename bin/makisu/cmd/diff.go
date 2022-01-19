@@ -90,7 +90,7 @@ func (cmd *diffCmd) Diff(imagesFullName []string) error {
 			if err != nil {
 				panic(fmt.Errorf("get reader from image %d layer: %s", i+1, err))
 			}
-			gzipReader, err := tario.NewGzipReader(reader)
+			gzipReader, err := tario.NewCompressionReader(reader)
 			if err != nil {
 				panic(fmt.Errorf("create gzip reader for layer: %s", err))
 			}

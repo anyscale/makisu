@@ -45,7 +45,7 @@ func tarAndGzipDiffs(ctx *context.BuildContext, writeDiffs func(*tar.Writer) err
 	tarDigester = sha256.New()
 
 	gzipMulti := stream.NewConcurrentMultiWriter(tempGzipTar, gzipDigester)
-	gzipper, err := tario.NewGzipWriter(gzipMulti)
+	gzipper, err := tario.NewCompressionWriter(gzipMulti)
 	if err != nil {
 		return nil, nil, "", fmt.Errorf("new gzip writer: %s", err)
 	}

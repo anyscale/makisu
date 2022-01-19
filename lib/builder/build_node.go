@@ -135,7 +135,7 @@ func (n *buildNode) applyLayer(digestPair *image.DigestPair, modifyfs bool) erro
 	if err != nil {
 		return fmt.Errorf("get reader from layer: %s", err)
 	}
-	gzipReader, err := tario.NewGzipReader(reader)
+	gzipReader, err := tario.NewCompressionReader(reader)
 	if err != nil {
 		return fmt.Errorf("create gzip reader for layer: %s", err)
 	}

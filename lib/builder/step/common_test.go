@@ -31,7 +31,7 @@ import (
 func readGzippedTar(t *testing.T, f io.Reader) map[string]os.FileInfo {
 	require := require.New(t)
 
-	gzipReader, err := tario.NewGzipReader(f)
+	gzipReader, err := tario.NewCompressionReader(f)
 	require.NoError(err)
 	defer gzipReader.Close()
 

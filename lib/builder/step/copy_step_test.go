@@ -389,7 +389,7 @@ func TestCopyStepCommitOnNonCriticalPath(t *testing.T) {
 		r, err := context.ImageStore.Layers.GetStoreFileReader(sha256)
 		require.NoError(err)
 		defer r.Close()
-		gzipReader, err := tario.NewGzipReader(r)
+		gzipReader, err := tario.NewCompressionReader(r)
 		require.NoError(err)
 		defer gzipReader.Close()
 		gzipTarReader := tar.NewReader(gzipReader)

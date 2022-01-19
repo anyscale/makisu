@@ -153,7 +153,7 @@ func (fs *MemFS) UpdateFromTarPath(source string, untar bool) error {
 		return fmt.Errorf("open tar file: %s", err)
 	}
 	defer reader.Close()
-	gzipReader, err := tario.NewGzipReader(reader)
+	gzipReader, err := tario.NewCompressionReader(reader)
 	if err != nil {
 		return fmt.Errorf("new gzip reader: %s", err)
 	}

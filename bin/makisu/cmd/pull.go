@@ -102,7 +102,7 @@ func (cmd *pullCmd) Extract(store *storage.ImageStore, manifest *image.Distribut
 		if err != nil {
 			panic(fmt.Errorf("get reader from layer: %s", err))
 		}
-		gzipReader, err := tario.NewGzipReader(reader)
+		gzipReader, err := tario.NewCompressionReader(reader)
 		if err != nil {
 			panic(fmt.Errorf("create gzip reader for layer: %s", err))
 		}
