@@ -324,7 +324,7 @@ func Send(method, rawurl string, options ...SendOption) (*http.Response, error) 
 		// component receiving the tls request does not serve https response.
 		// TODO (@evelynl): disable retry after tls migration.
 		if err != nil && shouldFallbackToHTTP(req, resp, opts) && !opts.httpFallbackDisabled {
-			log.Warnf("Failed to send https request: %s. Retrying with http...", err)
+			log.Warnf("WARN: Failed to send https request: %s. Retrying with http...", err)
 			originalErr := err
 			resp, err = fallbackToHTTP(client, method, opts)
 			if err != nil {
@@ -334,11 +334,16 @@ func Send(method, rawurl string, options ...SendOption) (*http.Response, error) 
 				err = fmt.Errorf(
 					"failed to fallback from https to http, original https error: %s,\n"+
 						"fallback http error: %s", originalErr, err)
+				log.Errorf("Failed to fall back to HTTP: %s", err)
+			} else {
+				log.Infof("Retrying http push succeeded")
 			}
 		}
 		if err != nil || shouldRetry(resp, opts) {
+			log.Infof("Retrying push...")
 			d := opts.retry.backoff.NextBackOff()
 			if d == backoff.Stop {
+				log.Error("Failed to retry push")
 				break // Backoff timed out.
 			}
 			time.Sleep(d)

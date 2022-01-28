@@ -535,12 +535,16 @@ func (c DockerRegistryClient) pushLayerContent(digest image.Digest, location str
 	}
 	defer r.Close()
 
+	var i int
 	for start < size {
+		log.Debugf("Pushing layer %s, chunk index %d", digest, i)
 		location, err = c.pushOneLayerChunk(location, start, endInclusive, r)
 		if err != nil {
 			return location, fmt.Errorf("push layer chunk: %w", err)
 		}
 		start, endInclusive = endInclusive+1, utils.Min(start+pushChunk-1, size-1)
+
+		i++
 	}
 	return location, nil
 }
