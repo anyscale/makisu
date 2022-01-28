@@ -26,6 +26,7 @@ import (
 	"github.com/uber/makisu/lib/log"
 	"github.com/uber/makisu/lib/registry"
 	"github.com/uber/makisu/lib/storage"
+	"github.com/uber/makisu/lib/tario"
 	"github.com/uber/makisu/lib/utils"
 
 	"github.com/pkg/errors"
@@ -174,7 +175,7 @@ func (manager *registryCacheManager) PullCache(cacheID string) (*image.DigestPai
 	return &image.DigestPair{
 		TarDigest: tarDigest,
 		GzipDescriptor: image.Descriptor{
-			MediaType: image.MediaTypeLayer,
+			MediaType: tario.GetLayerMediaType(),
 			Size:      size,
 			Digest:    gzipDigest,
 		},

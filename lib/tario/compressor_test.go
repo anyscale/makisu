@@ -11,43 +11,43 @@ import (
 func TestSetCompressionOptions(t *testing.T) {
 	require := require.New(t)
 
-	err := SetCompressionAlgorithm("invalid")
+	err := SetCompressionAlgorithmRead("invalid")
 	require.Error(err)
-	err = SetCompressionAlgorithm("gZiP")
+	err = SetCompressionAlgorithmWrite("gZiP")
 	require.Error(err)
 
-	err = SetCompressionAlgorithm("gzip")
+	err = SetCompressionAlgorithmRead("gzip")
 	require.NoError(err)
 	err = SetCompressionLevelGzip("invalid")
 	require.Error(err)
 
-	err = SetCompressionAlgorithm("gzip")
+	err = SetCompressionAlgorithmWrite("gzip")
 	require.NoError(err)
 	err = SetCompressionLevelGzip("default")
 	require.NoError(err)
 	require.Equal(
 		pgzip.DefaultCompression,
-		algoToCompressorFactoryMap[compressionAlgo].(*GzipCompressorFactory).compressionLevel,
+		algoToCompressorFactoryMap[compressionAlgoWrite].(*GzipCompressorFactory).compressionLevel,
 	)
 	err = SetCompressionLevelGzip("size")
 	require.NoError(err)
 	require.Equal(
 		pgzip.BestCompression,
-		algoToCompressorFactoryMap[compressionAlgo].(*GzipCompressorFactory).compressionLevel,
+		algoToCompressorFactoryMap[compressionAlgoWrite].(*GzipCompressorFactory).compressionLevel,
 	)
 
-	err = SetCompressionAlgorithm("lz4")
+	err = SetCompressionAlgorithmWrite("lz4")
 	require.NoError(err)
 	err = SetCompressionLevelLZ4("fast")
 	require.NoError(err)
 	require.Equal(
 		lz4.Fast,
-		algoToCompressorFactoryMap[compressionAlgo].(*LZ4CompressorFactory).compressionLevel,
+		algoToCompressorFactoryMap[compressionAlgoWrite].(*LZ4CompressorFactory).compressionLevel,
 	)
 	err = SetCompressionLevelLZ4("level9")
 	require.NoError(err)
 	require.Equal(
 		lz4.Level9,
-		algoToCompressorFactoryMap[compressionAlgo].(*LZ4CompressorFactory).compressionLevel,
+		algoToCompressorFactoryMap[compressionAlgoWrite].(*LZ4CompressorFactory).compressionLevel,
 	)
 }

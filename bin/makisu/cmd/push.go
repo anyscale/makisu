@@ -236,7 +236,7 @@ func (cmd *pushCmd) importTar(
 			}
 
 			layers = append(layers, image.Descriptor{
-				MediaType: image.MediaTypeLayer,
+				MediaType: tario.GetLayerMediaType(),
 				Size:      layerInfo.Size(),
 				Digest:    layerDigest,
 			})

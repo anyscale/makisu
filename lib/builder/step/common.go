@@ -96,7 +96,7 @@ func commitLayer(ctx *context.BuildContext) ([]*image.DigestPair, error) {
 
 	layerTarDigest := image.Digest("sha256:" + tarSHA256)
 	layerGzipDescriptor := image.Descriptor{
-		MediaType: image.MediaTypeLayer,
+		MediaType: tario.GetLayerMediaType(),
 		Size:      info.Size(),
 		Digest:    image.Digest("sha256:" + gzipTarSHA256),
 	}

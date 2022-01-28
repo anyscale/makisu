@@ -28,8 +28,7 @@ require (
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/juju/ratelimit v1.0.1
-	github.com/klauspost/compress v1.4.1 // indirect
-	github.com/klauspost/cpuid v1.2.0 // indirect
+	github.com/klauspost/compress v1.14.2
 	github.com/klauspost/pgzip v1.2.1
 	github.com/matm/gocov-html v0.0.0-20160206185555-f6dd0fd0ebc7
 	github.com/mitchellh/go-homedir v1.1.0 // indirect

@@ -27,8 +27,11 @@ const (
 	// MediaTypeConfig specifies the mediaType for the image configuration.
 	MediaTypeConfig = "application/vnd.docker.container.image.v1+json"
 
-	// MediaTypeLayer is the mediaType used for layers referenced by the manifest.
-	MediaTypeLayer = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+	// MediaTypeLayerGzip is the gzip mediaType used for layers referenced by the manifest.
+	MediaTypeLayerGzip = "application/vnd.docker.image.rootfs.diff.tar.gzip"
+
+	// MediaTypeLayerZstd is the zstd mediaType used for layers referenced by the manifest.
+	MediaTypeLayerZstd = "application/vnd.docker.image.rootfs.diff.tar.zstd"
 )
 
 // DistributionManifest defines a schema2 manifest. It's used for docker pull and docker push.

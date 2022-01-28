@@ -65,9 +65,11 @@ type buildCmd struct {
 	doLoad        bool
 	storageDir    string
 
-	compressionAlgo      string
+	compressionAlgoRead  string
+	compressionAlgoWrite string
 	compressionLevelGzip string
 	compressionLevelLZ4  string
+	compressionLevelZstd string
 
 	preserveRoot bool
 }
@@ -125,9 +127,11 @@ func getBuildCmd() *buildCmd {
 	buildCmd.PersistentFlags().BoolVar(&buildCmd.doLoad, "load", false, "Load image into docker daemon after build. Requires access to docker socket at location defined by ${DOCKER_HOST}")
 
 	buildCmd.PersistentFlags().StringVar(&buildCmd.storageDir, "storage", "", "Directory that makisu uses for temp files and cached layers. Mount this path for better caching performance. If modifyfs is set, default to /makisu-storage; Otherwise default to /tmp/makisu-storage")
-	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionAlgo, "compressionl-algo", "gzip", "Image compression algorithm, could be 'gzip', 'lz4'")
-	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelGzip, "compressionl-level-gzip", "default", "Image compression level for gzip, could be 'no', 'speed', 'size', 'default'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionAlgoRead, "compression-algo-read", "gzip", "Image compression algorithm for reading base images, could be 'gzip', 'lz4', 'zstd'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionAlgoWrite, "compression-algo-write", "gzip", "Image compression algorithm for building current images, could be 'gzip', 'lz4', 'zstd'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelGzip, "compression-level-gzip", "default", "Image compression level for gzip, could be 'no', 'speed', 'size', 'default'")
 	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelLZ4, "compression-level-lz4", "fast", "Image compression level for lz4, could be 'fast', 'level1', ..., 'level9'")
+	buildCmd.PersistentFlags().StringVar(&buildCmd.compressionLevelZstd, "compression-level-zstd", "default", "Image compression level for zstd, could be 'fastest', 'default', 'bettercompression', 'bestcompression'")
 
 	buildCmd.PersistentFlags().BoolVar(&buildCmd.preserveRoot, "preserve-root", false, "Copy / in the storage dir and copy it back after build.")
 
@@ -149,7 +153,12 @@ func (cmd *buildCmd) processFlags() error {
 		log.Infof("Added %d new items to blacklist: %v", len(cmd.blacklists), cmd.blacklists)
 	}
 
-	if err := tario.SetCompressionAlgorithm(cmd.compressionAlgo); err != nil {
+	if err := tario.SetCompressionAlgorithmRead(cmd.compressionAlgoRead); err != nil {
+		return fmt.Errorf("set compression algorithm: %s", err)
+	}
+
+
+	if err := tario.SetCompressionAlgorithmWrite(cmd.compressionAlgoWrite); err != nil {
 		return fmt.Errorf("set compression algorithm: %s", err)
 	}
 
@@ -158,6 +167,10 @@ func (cmd *buildCmd) processFlags() error {
 	}
 
 	if err := tario.SetCompressionLevelLZ4(cmd.compressionLevelLZ4); err != nil {
+		return fmt.Errorf("set lz4 compression level: %s", err)
+	}
+
+	if err := tario.SetCompressionLevelZstd(cmd.compressionLevelZstd); err != nil {
 		return fmt.Errorf("set lz4 compression level: %s", err)
 	}
 
