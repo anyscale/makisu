@@ -155,7 +155,7 @@ func (n *buildNode) pushCacheLayer(cacheMgr cache.Manager) error {
 	}
 
 	if digestPair != nil {
-		log.Infof("* Committed gzipped layer %s (%d bytes)",
+		log.Infof("* Committed compressed layer %s (%d bytes)",
 			digestPair.GzipDescriptor.Digest, digestPair.GzipDescriptor.Size)
 	}
 	log.Infof("* Pushing with cache ID %s", n.CacheID())

@@ -63,7 +63,7 @@ type Descriptor struct {
 }
 
 // DigestPair is a pair of uncompressed digest/compressed descriptor of the same layer.
-// All layers in makisu are saved in gzipped format, and that value is used in distribution
+// All layers in makisu are saved in compressed format, and that value is used in distribution
 // manifest; However the uncompressed digest is needed in image configs, so they are often passed
 // around in pairs.
 type DigestPair struct {
