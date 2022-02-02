@@ -167,7 +167,16 @@ func cleanManifest(buildContext *context.BuildContext, imageName image.Name) err
 func (cmd *buildCmd) newCacheManager(buildContext *context.BuildContext, imageName image.Name) cache.Manager {
 	var kvStore keyvalue.Store
 	var err error
-	if cmd.redisCacheAddress != "" {
+
+	if cmd.compressionAlgoRead != cmd.compressionAlgoWrite {
+		// Disable cache if we are mixing multiple compression algorithms for read and write.
+		// Otherwise build would fail when using read algo on cached layers produced by write algo.
+		log.Infof("Disble cache since read and write compression algorithms are different")
+		cmd.redisCacheAddress = ""
+		cmd.httpCacheAddress = ""
+		cmd.localCacheTTL = 0
+		return cache.NewNoopCacheManager()
+	} else if cmd.redisCacheAddress != "" {
 		log.Infof("Using redis at %s for cacheID storage", cmd.redisCacheAddress)
 
 		kvStore, err = keyvalue.NewRedisStore(cmd.redisCacheAddress, cmd.redisCachePassword, cmd.redisCacheTTL)
