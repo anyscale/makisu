@@ -82,7 +82,8 @@ func GetLayerMediaType() string {
 		// There is no lz4 support for media type. This is likely result in image to be rejected by docker.
 		return image.MediaTypeLayerGzip
 	case "zstd":
-		return image.MediaTypeLayerZstd
+		// For now containerd doesn't recognize zstd media type. Mark layer as gzip instead.
+		return image.MediaTypeLayerGzip
 	default:
 		return ""
 	}
