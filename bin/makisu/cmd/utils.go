@@ -114,6 +114,7 @@ func (cmd *buildCmd) getTargetImageName() (image.Name, error) {
 func pushImage(buildContext *context.BuildContext, imageName image.Name) error {
 	registryClient := registry.New(
 		buildContext.ImageStore, imageName.GetRegistry(), imageName.GetRepository())
+	log.Infof("pushing to registry=%v repo%v", imageName.GetRegistry(), imageName.GetRepository())
 	if err := registryClient.Push(imageName.GetTag()); err != nil {
 		return fmt.Errorf("failed to push image: %s", err)
 	}
