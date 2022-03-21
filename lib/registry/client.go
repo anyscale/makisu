@@ -39,9 +39,9 @@ import (
 )
 
 const (
-	baseManifestQuery = "https://%s/v2/%s/manifests/%s"
-	baseLayerQuery    = "https://%s/v2/%s/blobs/%s"
-	baseStartQuery    = "https://%s/v2/%s/blobs/uploads/"
+	baseManifestQuery = "http://%s/v2/%s/manifests/%s"
+	baseLayerQuery    = "http://%s/v2/%s/blobs/%s"
+	baseStartQuery    = "http://%s/v2/%s/blobs/uploads/"
 )
 
 // Client is the interface through which we can interact with a docker registry. It is used when
