@@ -17,6 +17,7 @@ package registry
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -372,6 +373,18 @@ func (c DockerRegistryClient) PushImageConfig(layerDigest image.Digest) error {
 	return c.pushLayerWithBackoff(layerDigest, true)
 }
 
+func extractLocation(resp *http.Response) (string, error) {
+	location := resp.Header.Get("Location")
+	if len(location) == 0 {
+		return "", errors.New("empty layer upload URL")
+	}
+	u, err := url.Parse(location)
+	if err != nil {
+		return "", err
+	}
+	return resp.Request.URL.ResolveReference(u).String(), nil
+}
+
 func (c DockerRegistryClient) pushLayerWithBackoff(layerDigest image.Digest, isConfig bool) error {
 	multiError := utils.NewMultiErrors()
 	b := c.config.backoff()
@@ -418,6 +431,7 @@ func (c DockerRegistryClient) pushLayerHelper(layerDigest image.Digest, isConfig
 	}
 
 	URL := fmt.Sprintf(baseStartQuery, c.registry, c.repository)
+	log.Infof("reg: %v repo: %v url: %v", c.registry, c.repository, URL)
 	resp, err := httputil.Send(
 		"POST",
 		URL,
@@ -431,11 +445,10 @@ func (c DockerRegistryClient) pushLayerHelper(layerDigest image.Digest, isConfig
 		return fmt.Errorf("send start push layer request %s: %w", URL, err)
 	}
 	defer resp.Body.Close()
-	URL = resp.Header.Get("Location")
-	if URL == "" {
-		return fmt.Errorf("empty layer upload URL")
+	URL, err = extractLocation(resp)
+	if err != nil {
+		return err
 	}
-
 	if isConfig {
 		log.Infof("* Started pushing image config %s", layerDigest)
 	} else {
@@ -581,11 +594,7 @@ func (c DockerRegistryClient) pushOneLayerChunk(location string, start, endInclu
 	}
 	defer resp.Body.Close()
 
-	newLocation := resp.Header.Get("Location")
-	if newLocation == "" {
-		return "", fmt.Errorf("empty layer upload URL")
-	}
-	return newLocation, nil
+	return extractLocation(resp)
 }
 
 func (c DockerRegistryClient) commitLayer(location string) error {

@@ -38,7 +38,7 @@ const tokenUsername = "<token>"
 
 var credentialHelperPrefix = path.Join(pathutils.DefaultInternalDir, "docker-credential-")
 
-// BasicAuthConfig is a simple wrapper of Docker's types.AuthConfig with addtional support
+// BasicAuthConfig is a simple wrapper of Docker's types.AuthConfig with additional support
 // for a password file.
 type BasicAuthConfig struct {
 	types.AuthConfig `yaml:",inline"`
@@ -156,6 +156,7 @@ func (c Config) getCredentialFromHelper(helper, addr string) (types.AuthConfig, 
 		}, nil
 	default:
 		helperFullName := credentialHelperPrefix + helper
+		fmt.Println("getting credential using", helperFullName)
 		creds, err := client.Get(client.NewShellProgramFunc(helperFullName), addr)
 		if err != nil {
 			return types.AuthConfig{}, err

@@ -69,7 +69,7 @@ ext-tools: vendor $(EXT_TOOLS)
 .PHONY: $(EXT_TOOLS)
 $(EXT_TOOLS): vendor
 	@echo "Installing external tool $@"
-	@(ls $(EXT_TOOLS_DIR)/$(notdir $@) > /dev/null 2>&1) || GOBIN=$(PWD)/$(EXT_TOOLS_DIR) go install ./vendor/$@
+	@(ls $(EXT_TOOLS_DIR)/$(notdir $@) > /dev/null 2>&1) || GOBIN=$(PWD)/$(EXT_TOOLS_DIR) go install -mod=vendor ./vendor/$@
 
 mocks: ext-tools
 	@echo "Generating mocks"

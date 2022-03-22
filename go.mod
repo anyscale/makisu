@@ -20,7 +20,7 @@ require (
 	github.com/docker/go-metrics v0.0.0-20181218153428-b84716841b82 // indirect
 	github.com/docker/go-units v0.3.3 // indirect
 	github.com/docker/libtrust v0.0.0-20160708172513-aabc10ec26b7 // indirect
-	github.com/go-redis/redis v6.14.2+incompatible
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang/mock v1.4.4
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/google/go-cmp v0.5.6
@@ -28,8 +28,8 @@ require (
 	github.com/gorilla/mux v1.6.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/juju/ratelimit v1.0.1
-	github.com/klauspost/compress v1.14.2
-	github.com/klauspost/pgzip v1.2.1
+	github.com/klauspost/compress v1.15.1
+	github.com/klauspost/pgzip v1.2.5
 	github.com/matm/gocov-html v0.0.0-20160206185555-f6dd0fd0ebc7
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/onsi/ginkgo v1.8.0 // indirect
@@ -44,16 +44,16 @@ require (
 	github.com/sirupsen/logrus v1.4.0 // indirect
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/pflag v1.0.3 // indirect
-	github.com/stretchr/testify v1.5.1
+	github.com/stretchr/testify v1.7.0
 	github.com/yuin/gopher-lua v0.0.0-20181214045814-db9ae37725ec // indirect
-	go.uber.org/atomic v1.3.2 // indirect
-	go.uber.org/multierr v1.1.0 // indirect
-	go.uber.org/zap v1.9.1
-	golang.org/x/lint v0.0.0-20190301231843-5614ed5bae6f
-	golang.org/x/net v0.0.0-20200202094626-16171245cfb2
+	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/multierr v1.8.0 // indirect
+	go.uber.org/zap v1.21.0
+	golang.org/x/lint v0.0.0-20190930215403-16217165b5de
+	golang.org/x/net v0.0.0-20220225172249-27dd8689420f
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45 // indirect
-	golang.org/x/tools v0.0.0-20190425150028-36563e24a262
-	gopkg.in/yaml.v2 v2.2.2
+	golang.org/x/tools v0.1.5
+	gopkg.in/yaml.v2 v2.2.8
 )
 
 require (
@@ -68,9 +68,10 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 // indirect
 	github.com/prometheus/procfs v0.0.0-20181204211112-1dc9a6cbc91a // indirect
-	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 // indirect
-	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
-	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
+	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550 // indirect
+	golang.org/x/mod v0.4.2 // indirect
+	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
